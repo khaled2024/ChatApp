@@ -374,6 +374,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Massenger;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile pic";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow accessto select a pic to Your Profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -403,6 +405,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Massenger;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile pic";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow accessto select a pic to Your Profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
