@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Firebase
 class LoginViewController: UIViewController {
     
     //MARK: - Vars&Outlets
@@ -104,7 +104,16 @@ class LoginViewController: UIViewController {
             ErrorLoginAlert()
             return
         }
-        print(email , password)
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) {[weak self] authResult, error in
+            guard let strongSelf = self else{return}
+            guard let result = authResult , error == nil else{
+                print("Error for Login with email : \(email) because \(error?.localizedDescription ?? "")")
+                return
+            }
+            let user = result.user
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+            print("Login \(user)")
+        }
     }
     private func ErrorLoginAlert(){
         let alert = UIAlertController(title: "Woops", message: "Please enter all information in Login fields", preferredStyle: .alert)

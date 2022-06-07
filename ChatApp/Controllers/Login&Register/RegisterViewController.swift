@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Firebase
 class RegisterViewController: UIViewController {
     
     //MARK: - Vars&Outlets
@@ -17,11 +17,11 @@ class RegisterViewController: UIViewController {
     }()
     private let LogoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill.badge.plus")
+        imageView.image = UIImage(systemName: "person.crop.circle")
         imageView.tintColor = .darkGray
         imageView.layer.masksToBounds = true
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.lightGray.cgColor
+//        imageView.layer.borderWidth = 2
+//        imageView.layer.borderColor = UIColor.lightGray.cgColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -135,11 +135,12 @@ class RegisterViewController: UIViewController {
         let size = registerScrollView.width / 3
         LogoImageView.frame = CGRect(x: (registerScrollView.width - size) / 2, y: 80, width: size, height: size)
         LogoImageView.layer.cornerRadius = LogoImageView.width / 2.0
-        emailField.frame = CGRect(x: 30, y: LogoImageView.bottom + 50, width: registerScrollView.width - 60, height: 50)
-        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: registerScrollView.width - 60, height: 50)
-        firstNameField.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: registerScrollView.width - 60, height: 50)
+        firstNameField.frame = CGRect(x: 30, y: LogoImageView.bottom + 50, width: registerScrollView.width - 60, height: 50)
         lastNameField.frame = CGRect(x: 30, y: firstNameField.bottom + 10, width: registerScrollView.width - 60, height: 50)
-        registerBtn.frame = CGRect(x: 30 , y: lastNameField.bottom + 10, width: registerScrollView.width - 60, height: 50)
+        emailField.frame = CGRect(x: 30, y: lastNameField.bottom + 10, width: registerScrollView.width - 60, height: 50)
+        passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: registerScrollView.width - 60, height: 50)
+        
+        registerBtn.frame = CGRect(x: 30 , y: passwordField.bottom + 10, width: registerScrollView.width - 60, height: 50)
     }
     //MARK: - functions
     @objc func changeProfilePic(){
@@ -154,14 +155,30 @@ class RegisterViewController: UIViewController {
             ErrorRegisterAlert()
             return
         }
-        print(email , password , fName , lName)
+        DataBaseManager.shared.userExists(with: email) { [weak self] exist in
+            guard let strongSelf = self else{return}
+            guard !exist else{
+                // user already exists
+                self?.ErrorRegisterAlert(message: "user already exists")
+                return
+            }
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                guard  authResult != nil , error == nil else{
+                    print("Error Creating user \(error?.localizedDescription ?? "")")
+                    return
+                }
+                DataBaseManager.shared.insertChatAppUser(with: ChatAppUser(firstName: fName,
+                                                                           lastName: lName,
+                                                                           email: email))
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+            }
+        }
     }
-    private func ErrorRegisterAlert(){
-        let alert = UIAlertController(title: "Woops", message: "Please enter all information in Register fields", preferredStyle: .alert)
+    private func ErrorRegisterAlert(message: String = "Please enter all information in Register fields"){
+        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .destructive, handler: nil))
         self.present(alert, animated: true)
     }
-    
 }
 //MARK: - extensions
 extension RegisterViewController: UITextFieldDelegate {
