@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FBSDKLoginKit
 class LoginViewController: UIViewController {
     
     //MARK: - Vars&Outlets
@@ -65,6 +66,7 @@ class LoginViewController: UIViewController {
         loginBtn.titleLabel?.textColor = .blue
         return loginBtn
     }()
+    private let faceBookBtn = FBLoginButton()
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
@@ -79,12 +81,14 @@ class LoginViewController: UIViewController {
         loginBtn.addTarget(self, action: #selector(loginDidTapped), for: .touchUpInside)
         emailField.delegate = self
         passwordField.delegate = self
+        faceBookBtn.delegate = self
         //add views
         view.addSubview(LoginScrollView)
         LoginScrollView.addSubview(LogoImageView)
         LoginScrollView.addSubview(emailField)
         LoginScrollView.addSubview(passwordField)
         LoginScrollView.addSubview(loginBtn)
+        LoginScrollView.addSubview(faceBookBtn)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -94,6 +98,9 @@ class LoginViewController: UIViewController {
         emailField.frame = CGRect(x: 30, y: LogoImageView.bottom + 50, width: LoginScrollView.width - 60, height: 50)
         passwordField.frame = CGRect(x: 30, y: emailField.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         loginBtn.frame = CGRect(x: 30 , y: passwordField.bottom + 20, width: LoginScrollView.width - 60, height: 50)
+        faceBookBtn.frame = CGRect(x: 30 , y: loginBtn.bottom + 20, width: LoginScrollView.width - 60, height: 50)
+        faceBookBtn.layer.cornerRadius = 20
+        
     }
     //MARK: - functions
     
@@ -108,6 +115,7 @@ class LoginViewController: UIViewController {
             guard let strongSelf = self else{return}
             guard let result = authResult , error == nil else{
                 print("Error for Login with email : \(email) because \(error?.localizedDescription ?? "")")
+                strongSelf.ErrorLoginAlert(message: "\(error?.localizedDescription ?? "")")
                 return
             }
             let user = result.user
@@ -115,8 +123,8 @@ class LoginViewController: UIViewController {
             print("Login \(user)")
         }
     }
-    private func ErrorLoginAlert(){
-        let alert = UIAlertController(title: "Woops", message: "Please enter all information in Login fields", preferredStyle: .alert)
+    private func ErrorLoginAlert(message: String = "Please enter all information in Login fields"){
+        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .destructive, handler: nil))
         self.present(alert, animated: true)
     }
@@ -137,4 +145,52 @@ extension LoginViewController: UITextFieldDelegate {
         }
         return true
     }
+}
+extension LoginViewController:LoginButtonDelegate {
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        // no operations
+    }
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        guard let token = result?.token?.tokenString else{
+            print("user failed to log in with facebook")
+            return
+        }
+        let facbookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields": "email, name"], tokenString: token, version: nil, httpMethod: .get)
+        facbookRequest.start(completionHandler: {_,result,error in
+            guard let result = result as? [String:Any] , error == nil else{
+                print("failed to make graph request")
+                return
+            }
+            print(result)
+            guard let email = result["email"] as? String, let userName = result["name"] as? String else{
+                print("failed to get email and username (facebook)")
+                return
+            }
+            let nameComponents = userName.components(separatedBy: " ")
+            guard nameComponents.count == 2 else{
+                return
+            }
+            let firstComponent = nameComponents[0]
+            let secondComponent = nameComponents[1]
+            DataBaseManager.shared.userExists(with: email) { exist in
+                if !exist{
+                    DataBaseManager.shared.insertChatAppUser(with: ChatAppUser(firstName: firstComponent, lastName: secondComponent, email: email))
+                }
+            }
+            let codential = FacebookAuthProvider.credential(withAccessToken: token)
+            FirebaseAuth.Auth.auth().signIn(with: codential) { [weak self] authResult, error in
+                guard let strongSelf = self else{return}
+                guard authResult != nil , error == nil else{
+                    print("facebook codintial failed \(error?.localizedDescription ?? "") ")
+                    return
+                }
+                print("succesully log in with facebook")
+                strongSelf.navigationController?.dismiss(animated: true,completion: nil)
+            }
+            
+        })
+        
+    }
+    
 }
