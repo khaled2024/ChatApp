@@ -9,9 +9,12 @@ import UIKit
 import Firebase
 import FBSDKLoginKit
 import IQKeyboardManagerSwift
+import JGProgressHUD
 class LoginViewController: UIViewController {
     
     //MARK: - Vars&Outlets
+    private let spinner = JGProgressHUD(style: .dark)
+    
     private let LoginScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -68,7 +71,7 @@ class LoginViewController: UIViewController {
         return loginBtn
     }()
     private let faceBookBtn = FBLoginButton()
-//    private let googleSignBtn = GIDSignInButton()
+    //    private let googleSignBtn = GIDSignInButton()
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,7 +94,7 @@ class LoginViewController: UIViewController {
         LoginScrollView.addSubview(passwordField)
         LoginScrollView.addSubview(loginBtn)
         LoginScrollView.addSubview(faceBookBtn)
-//        LoginScrollView.addSubview(googleSignBtn)
+        //        LoginScrollView.addSubview(googleSignBtn)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -103,7 +106,7 @@ class LoginViewController: UIViewController {
         loginBtn.frame = CGRect(x: 30 , y: passwordField.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         faceBookBtn.frame = CGRect(x: 30 , y: loginBtn.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         faceBookBtn.layer.cornerRadius = 20
-//        googleSignBtn.frame = CGRect(x: 30 , y: faceBookBtn.bottom + 20, width: LoginScrollView.width - 60, height: 50)
+        //        googleSignBtn.frame = CGRect(x: 30 , y: faceBookBtn.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         
     }
     //MARK: - functions
@@ -115,8 +118,12 @@ class LoginViewController: UIViewController {
             ErrorLoginAlert()
             return
         }
+        spinner.show(in: view)
         FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password) {[weak self] authResult, error in
             guard let strongSelf = self else{return}
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
             guard let result = authResult , error == nil else{
                 print("Error for Login with email : \(email) because \(error?.localizedDescription ?? "")")
                 strongSelf.ErrorLoginAlert(message: "Please check your Email & Password")

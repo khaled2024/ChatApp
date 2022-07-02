@@ -21,6 +21,7 @@
 		EA2CDB272849042E00F79F3C /* NewConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CDB262849042E00F79F3C /* NewConversationViewController.swift */; };
 		EA2CDB292849044500F79F3C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CDB282849044500F79F3C /* ProfileViewController.swift */; };
 		EA30366F28498C0A007EFC76 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30366E28498C0A007EFC76 /* Extensions.swift */; };
+		EA97CFF92870638400242017 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97CFF82870638400242017 /* ChatViewController.swift */; };
 		EAA6B6C0284B989100977874 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA6B6BF284B989100977874 /* GoogleService-Info.plist */; };
 		EAAEB60A284ECEE90049F3AE /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +45,7 @@
 		EA2CDB262849042E00F79F3C /* NewConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationViewController.swift; sourceTree = "<group>"; };
 		EA2CDB282849044500F79F3C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EA30366E28498C0A007EFC76 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		EA97CFF82870638400242017 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		EAA6B6BF284B989100977874 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +134,7 @@
 				EA2CDB242849041B00F79F3C /* VideoPlayerViewController.swift */,
 				EA2CDB262849042E00F79F3C /* NewConversationViewController.swift */,
 				EA2CDB282849044500F79F3C /* ProfileViewController.swift */,
+				EA97CFF82870638400242017 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				EA2CDB292849044500F79F3C /* ProfileViewController.swift in Sources */,
 				EA2CDB072848FDB900F79F3C /* SceneDelegate.swift in Sources */,
 				EA2CDB232849040E00F79F3C /* PhotoViewerViewController.swift in Sources */,
+				EA97CFF92870638400242017 /* ChatViewController.swift in Sources */,
 				EAAEB60A284ECEE90049F3AE /* DataBaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

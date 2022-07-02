@@ -8,9 +8,12 @@
 import UIKit
 import Firebase
 import IQKeyboardManagerSwift
+import JGProgressHUD
 class RegisterViewController: UIViewController {
     
     //MARK: - Vars&Outlets
+    private let spinner = JGProgressHUD(style: .dark)
+    
     private let registerScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
@@ -155,8 +158,12 @@ class RegisterViewController: UIViewController {
             ErrorRegisterAlert()
             return
         }
+        spinner.show(in: view)
         DataBaseManager.shared.userExists(with: email) { [weak self] exist in
             guard let strongSelf = self else{return}
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
             guard !exist else{
                 // user already exists
                 self?.ErrorRegisterAlert(message: "user already exists")
