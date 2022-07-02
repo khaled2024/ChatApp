@@ -7,7 +7,8 @@
 
 import UIKit
 import FacebookCore
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate{
 
     var window: UIWindow?
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {

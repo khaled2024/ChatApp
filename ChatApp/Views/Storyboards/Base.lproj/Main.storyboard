@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="57" y="1604"/>
+            <point key="canvasLocation" x="-75" y="1604"/>
         </scene>
         <!--Chats-->
         <scene sceneID="VX0-eO-xBY">
@@ -42,7 +42,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vAF-qR-Fei" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="57" y="836"/>
+            <point key="canvasLocation" x="-75" y="836"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ufq-Oz-lzd">
@@ -52,6 +52,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" red="0.1764705882" green="0.53333333329999999" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="m9q-80-3Ay" kind="relationship" relationship="viewControllers" id="pIy-22-gvf"/>
@@ -60,7 +61,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d43-pY-0fD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="741" y="80"/>
+            <point key="canvasLocation" x="714" y="80"/>
         </scene>
         <!--Profile-->
         <scene sceneID="idk-Y1-F98">
@@ -77,7 +78,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gha-42-Y9t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1151" y="836"/>
+            <point key="canvasLocation" x="1457" y="836"/>
         </scene>
         <!--Profile-->
         <scene sceneID="82k-cw-JH7">
@@ -108,7 +109,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yao-3Z-AWj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1151" y="1604"/>
+            <point key="canvasLocation" x="1457" y="1604"/>
         </scene>
     </scenes>
     <resources>

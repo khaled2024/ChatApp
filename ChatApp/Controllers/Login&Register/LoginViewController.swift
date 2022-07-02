@@ -8,6 +8,7 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
+import IQKeyboardManagerSwift
 class LoginViewController: UIViewController {
     
     //MARK: - Vars&Outlets
@@ -67,10 +68,11 @@ class LoginViewController: UIViewController {
         return loginBtn
     }()
     private let faceBookBtn = FBLoginButton()
-    
+//    private let googleSignBtn = GIDSignInButton()
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         title = "Login"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
@@ -89,17 +91,19 @@ class LoginViewController: UIViewController {
         LoginScrollView.addSubview(passwordField)
         LoginScrollView.addSubview(loginBtn)
         LoginScrollView.addSubview(faceBookBtn)
+//        LoginScrollView.addSubview(googleSignBtn)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         LoginScrollView.frame = view.bounds
         let size = LoginScrollView.width / 3
         LogoImageView.frame = CGRect(x: (LoginScrollView.width - size) / 2, y: (view.height) / 8, width: size, height: size)
-        emailField.frame = CGRect(x: 30, y: LogoImageView.bottom + 50, width: LoginScrollView.width - 60, height: 50)
+        emailField.frame = CGRect(x: 30, y: LogoImageView.bottom + 30, width: LoginScrollView.width - 60, height: 50)
         passwordField.frame = CGRect(x: 30, y: emailField.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         loginBtn.frame = CGRect(x: 30 , y: passwordField.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         faceBookBtn.frame = CGRect(x: 30 , y: loginBtn.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         faceBookBtn.layer.cornerRadius = 20
+//        googleSignBtn.frame = CGRect(x: 30 , y: faceBookBtn.bottom + 20, width: LoginScrollView.width - 60, height: 50)
         
     }
     //MARK: - functions
@@ -115,7 +119,7 @@ class LoginViewController: UIViewController {
             guard let strongSelf = self else{return}
             guard let result = authResult , error == nil else{
                 print("Error for Login with email : \(email) because \(error?.localizedDescription ?? "")")
-                strongSelf.ErrorLoginAlert(message: "\(error?.localizedDescription ?? "")")
+                strongSelf.ErrorLoginAlert(message: "Please check your Email & Password")
                 return
             }
             let user = result.user

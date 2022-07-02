@@ -448,9 +448,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3TWF5CMBRA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Massenger;
+				INFOPLIST_KEY_CFBundleDisplayName = Messenger;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile pic";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow accessto select a pic to Your Profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -480,9 +481,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3TWF5CMBRA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatApp/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Massenger;
+				INFOPLIST_KEY_CFBundleDisplayName = Messenger;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile pic";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow accessto select a pic to Your Profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

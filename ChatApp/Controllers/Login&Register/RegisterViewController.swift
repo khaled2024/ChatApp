@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import IQKeyboardManagerSwift
 class RegisterViewController: UIViewController {
     
     //MARK: - Vars&Outlets
@@ -47,7 +48,7 @@ class RegisterViewController: UIViewController {
         passwordTF.placeholder = "Password"
         passwordTF.autocapitalizationType = .none
         passwordTF.autocorrectionType = .no
-        passwordTF.returnKeyType = .continue
+        passwordTF.returnKeyType = .done
         passwordTF.layer.cornerRadius = 10
         passwordTF.layer.borderColor = UIColor.lightGray.cgColor
         passwordTF.layer.borderWidth = 1
@@ -80,7 +81,7 @@ class RegisterViewController: UIViewController {
         lastNameTF.placeholder = "Last Name"
         lastNameTF.autocapitalizationType = .none
         lastNameTF.autocorrectionType = .no
-        lastNameTF.returnKeyType = .done
+        lastNameTF.returnKeyType = .continue
         lastNameTF.layer.cornerRadius = 10
         lastNameTF.layer.borderColor = UIColor.lightGray.cgColor
         lastNameTF.layer.borderWidth = 1
@@ -135,11 +136,10 @@ class RegisterViewController: UIViewController {
         let size = registerScrollView.width / 3
         LogoImageView.frame = CGRect(x: (registerScrollView.width - size) / 2, y: 80, width: size, height: size)
         LogoImageView.layer.cornerRadius = LogoImageView.width / 2.0
-        firstNameField.frame = CGRect(x: 30, y: LogoImageView.bottom + 50, width: registerScrollView.width - 60, height: 50)
+        firstNameField.frame = CGRect(x: 30, y: LogoImageView.bottom + 30, width: registerScrollView.width - 60, height: 50)
         lastNameField.frame = CGRect(x: 30, y: firstNameField.bottom + 10, width: registerScrollView.width - 60, height: 50)
         emailField.frame = CGRect(x: 30, y: lastNameField.bottom + 10, width: registerScrollView.width - 60, height: 50)
         passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: registerScrollView.width - 60, height: 50)
-        
         registerBtn.frame = CGRect(x: 30 , y: passwordField.bottom + 10, width: registerScrollView.width - 60, height: 50)
     }
     //MARK: - functions
@@ -183,13 +183,13 @@ class RegisterViewController: UIViewController {
 //MARK: - extensions
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailField {
-            self.passwordField.becomeFirstResponder()
-        }else if textField == passwordField {
-            self.firstNameField.becomeFirstResponder()
-        }else if textField == firstNameField {
+        if textField == firstNameField {
             self.lastNameField.becomeFirstResponder()
-        }else if textField == lastNameField{
+        }else if textField == lastNameField {
+            self.emailField.becomeFirstResponder()
+        }else if textField == emailField {
+            self.passwordField.becomeFirstResponder()
+        }else if textField == passwordField{
             self.registerDidTapped()
         }
         return true
