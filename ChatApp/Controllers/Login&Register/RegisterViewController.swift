@@ -24,8 +24,8 @@ class RegisterViewController: UIViewController {
         imageView.image = UIImage(systemName: "person.crop.circle")
         imageView.tintColor = .darkGray
         imageView.layer.masksToBounds = true
-//        imageView.layer.borderWidth = 2
-//        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        //        imageView.layer.borderWidth = 2
+        //        imageView.layer.borderColor = UIColor.lightGray.cgColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -174,9 +174,28 @@ class RegisterViewController: UIViewController {
                     print("Error Creating user \(error?.localizedDescription ?? "")")
                     return
                 }
-                DataBaseManager.shared.insertChatAppUser(with: ChatAppUser(firstName: fName,
-                                                                           lastName: lName,
-                                                                           email: email))
+                let chatUser = ChatAppUser(firstName: fName,
+                                           lastName: lName,
+                                           email: email)
+                DataBaseManager.shared.insertChatAppUser(with:chatUser) { success in
+                    if success {
+                        // upload image
+                        guard let image = strongSelf.LogoImageView.image , let data = image.pngData() else{
+                            return
+                        }
+                        let fileName = chatUser.profilePictureFileName
+                        StorageManager.shared.uploadProfilePicture(with: data, fileName: fileName) { result in
+                            switch result {
+                            case .success(let downloadUrl):
+                                print(downloadUrl)
+                                UserDefaults.standard.set(downloadUrl, forKey: "profilePictureUrl")
+                            case .failure(let error):
+                                print("storage manager error\(error)")
+                                
+                            }
+                        }
+                    }
+                }
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             }
         }

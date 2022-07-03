@@ -7,6 +7,8 @@ target 'ChatApp' do
 pod 'Firebase/Core'
 pod 'FirebaseAuth'
 pod 'Firebase/Database'
+pod 'Firebase/Storage'
+
 # facebook
 pod 'FacebookCore'
 pod 'FacebookLogin'

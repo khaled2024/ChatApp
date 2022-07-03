@@ -24,6 +24,7 @@
 		EA97CFF92870638400242017 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97CFF82870638400242017 /* ChatViewController.swift */; };
 		EAA6B6C0284B989100977874 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA6B6BF284B989100977874 /* GoogleService-Info.plist */; };
 		EAAEB60A284ECEE90049F3AE /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */; };
+		EAE8961E28723F61008D13DE /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE8961D28723F61008D13DE /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		EA97CFF82870638400242017 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		EAA6B6BF284B989100977874 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
+		EAE8961D28723F61008D13DE /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 				EA2CDB062848FDB900F79F3C /* SceneDelegate.swift */,
 				EA30366E28498C0A007EFC76 /* Extensions.swift */,
 				EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */,
+				EAE8961D28723F61008D13DE /* StorageManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				EA2CDB232849040E00F79F3C /* PhotoViewerViewController.swift in Sources */,
 				EA97CFF92870638400242017 /* ChatViewController.swift in Sources */,
 				EAAEB60A284ECEE90049F3AE /* DataBaseManager.swift in Sources */,
+				EAE8961E28723F61008D13DE /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

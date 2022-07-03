@@ -17,7 +17,10 @@ struct ChatAppUser {
         safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
         return safeEmail
     }
-//    let profileImage: String
+    var profilePictureFileName: String  {
+        //khaled_gmail.com_profile_picture.png
+        return "\(safeEmail)_profile_picture.png"
+    }
 }
 // final bec cant be inherantce from any other class
 final class DataBaseManager{
@@ -43,11 +46,19 @@ extension DataBaseManager {
     }
     
     /// insert user into database
-    public func insertChatAppUser(with user: ChatAppUser){
+    public func insertChatAppUser(with user: ChatAppUser , completion: @escaping (Bool)-> Void){
         dataBase.child(user.safeEmail).setValue([
             "firstName": user.firstName,
             "lastName": user.lastName
-        ])
+        ], withCompletionBlock: { error , _ in
+            guard error == nil else{
+                print("failed to write to firebase")
+                completion(false)
+                return
+            }
+            completion(true)
+            
+        })
     }
 }
 
