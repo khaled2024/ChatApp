@@ -110,7 +110,6 @@ class LoginViewController: UIViewController {
         
     }
     //MARK: - functions
-    
     @objc func loginDidTapped(){
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
@@ -130,6 +129,7 @@ class LoginViewController: UIViewController {
                 return
             }
             let user = result.user
+            UserDefaults.standard.set(email, forKey: "email")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             print("Login \(user)")
         }
@@ -157,7 +157,7 @@ extension LoginViewController: UITextFieldDelegate {
         return true
     }
 }
-extension LoginViewController:LoginButtonDelegate {
+extension LoginViewController: LoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         // no operations
     }
@@ -174,7 +174,8 @@ extension LoginViewController:LoginButtonDelegate {
                 return
             }
             print(result)
-            guard let email = result["email"] as? String, let userName = result["name"] as? String else{
+            guard let email = result["email"] as? String,
+                  let userName = result["name"] as? String else{
                 print("failed to get email and username (facebook)")
                 return
             }
@@ -184,6 +185,8 @@ extension LoginViewController:LoginButtonDelegate {
             }
             let firstComponent = nameComponents[0]
             let secondComponent = nameComponents[1]
+
+            UserDefaults.standard.set(email, forKey: "email")
             DataBaseManager.shared.userExists(with: email) { exist in
                 if !exist{
                     let chatUser = ChatAppUser(firstName: firstComponent, lastName: secondComponent, email: email)
