@@ -12,8 +12,9 @@ class NewConversationViewController: UIViewController {
     //MARK: - vars
     private let spinner = JGProgressHUD(style: .dark)
     private var users = [[String:String]]()
-    private var hasFetched = false
     private var results = [[String:String]]()
+    private var hasFetched = false
+    public var completion: (([String:String]) -> (Void))?
     private var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search for user.."
@@ -45,7 +46,7 @@ class NewConversationViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         navigationController?.navigationBar.topItem?.titleView = searchBar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancle", style: .done, target: self, action: #selector(cancleBtnTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancle", style: .done, target: self, action: #selector(dismissSelf))
         searchBar.becomeFirstResponder()
         setUpTableView()
     }
@@ -59,7 +60,7 @@ class NewConversationViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    @objc func cancleBtnTapped(){
+    @objc func dismissSelf(){
         dismiss(animated: true,completion: nil)
     }
 }
@@ -76,8 +77,11 @@ extension NewConversationViewController: UITableViewDelegate , UITableViewDataSo
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let targerUserData = results[indexPath.row]
+        dismiss(animated: true,completion: { [weak self] in
+            self?.completion?(targerUserData)
+        })
     }
-    
     
 }
 //MARK: - UISearchBarDelegate
