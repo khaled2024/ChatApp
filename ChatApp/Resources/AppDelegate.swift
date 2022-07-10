@@ -10,14 +10,12 @@ import UIKit
 import Firebase
 import FacebookCore
 import FirebaseCore
-import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        IQKeyboardManager.shared.enable = true
         //        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         //        GIDSignIn.sharedInstance().delegate = self
         ApplicationDelegate.shared.application(

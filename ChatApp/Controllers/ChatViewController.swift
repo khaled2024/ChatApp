@@ -10,10 +10,15 @@ import MessageKit
 import InputBarAccessoryView
 
 struct Message: MessageType{
-   public var sender: SenderType
-   public var messageId: String
-   public var sentDate: Date
-   public var kind: MessageKind
+    public var sender: SenderType
+    public var messageId: String
+    public var sentDate: Date
+    public var kind: MessageKind
+}
+struct Sender: SenderType{
+    public var photoURL: String
+    public var senderId: String
+    public var displayName: String
 }
 extension MessageKind {
     var messageKindString: String {
@@ -39,15 +44,9 @@ extension MessageKind {
         case .custom(_):
             return "custom"
         }
-        
     }
 }
-struct Sender: SenderType{
-    public var photoURL: String
-    public var senderId: String
-    public var displayName: String
-}
-
+//MARK: - Start Class
 class ChatViewController: MessagesViewController{
     
     public static let dateFormatter: DateFormatter = {
@@ -61,16 +60,22 @@ class ChatViewController: MessagesViewController{
     private var messages = [Message]()
     public var isNewConversation = false
     public let otherUserEmail: String
+    private let conversationID: String?
     private var selfSender: Sender?  {
         guard let email = UserDefaults.standard.value(forKey: "email")as? String else {
             return nil
         }
-        return Sender(photoURL: "", senderId: email, displayName: "khaled hussien")
+//        let safeEmail = DataBaseManager.safeEmail(emailAddress: email)
+        return Sender(photoURL: "", senderId: email, displayName: "Me")
     }
     
-    init(with email: String) {
+    init(with email: String, id: String?) {
+        self.conversationID = id
         self.otherUserEmail = email
         super.init(nibName: nil, bundle: nil)
+        if let conversationId = conversationID{
+            ListenForMessage(id: conversationId)
+        }
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -90,6 +95,23 @@ class ChatViewController: MessagesViewController{
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
     }
+    //MARK: - private func
+    private func ListenForMessage(id: String){
+        DataBaseManager.shared.getAllMessagesForConversation(with: id) { [weak self] result in
+            switch result {
+            case .success(let messages):
+                guard  !messages.isEmpty else{
+                    return
+                }
+                self?.messages = messages
+                DispatchQueue.main.async {
+                    self?.messagesCollectionView.reloadDataAndKeepOffset()
+                }
+            case .failure(let error):
+                print("failed to get messages \(error)")
+            }
+        }
+    }
 }
 //MARK: - extensions
 // MessagesDataSource
@@ -99,7 +121,6 @@ extension ChatViewController: MessagesDataSource , MessagesLayoutDelegate, Messa
             return sender
         }
         fatalError("self sender is nil , email should be cached")
-        return Sender(photoURL: "", senderId: "123", displayName: "")
     }
     
     public func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -122,7 +143,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate{
         if isNewConversation {
             // create conversation in database
             let message = Message(sender: selfSender, messageId: messageID, sentDate: Date(), kind: .text(text))
-            DataBaseManager.shared.createNewConversation(with: otherUserEmail, firstMessage: message) {  success in
+            DataBaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "user", firstMessage: message) {  success in
                 if success {
                     print("success to send")
                 }else{

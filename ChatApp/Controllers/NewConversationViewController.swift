@@ -3,12 +3,10 @@
 //  ChatApp
 //
 //  Created by KhaleD HuSsien on 02/06/2022.
-//
 
 import UIKit
 import JGProgressHUD
 class NewConversationViewController: UIViewController {
-    
     //MARK: - vars
     private let spinner = JGProgressHUD(style: .dark)
     private var users = [[String:String]]()
@@ -82,11 +80,9 @@ extension NewConversationViewController: UITableViewDelegate , UITableViewDataSo
             self?.completion?(targerUserData)
         })
     }
-    
 }
 //MARK: - UISearchBarDelegate
 extension NewConversationViewController: UISearchBarDelegate{
-
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text , !text.replacingOccurrences(of: " ", with: "").isEmpty else{
             return

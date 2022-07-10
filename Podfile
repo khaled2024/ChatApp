@@ -13,7 +13,7 @@ pod 'Firebase/Storage'
 pod 'FacebookCore'
 pod 'FacebookLogin'
 #IQKeyboardManagerSwift
-pod 'IQKeyboardManagerSwift'
+#pod 'IQKeyboardManagerSwift'
 
 # google sign in
 # pod 'GoogleSignIn', '< 5.0.0'

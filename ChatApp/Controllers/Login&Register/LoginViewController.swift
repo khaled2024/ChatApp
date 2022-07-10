@@ -8,7 +8,6 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
-import IQKeyboardManagerSwift
 import JGProgressHUD
 class LoginViewController: UIViewController {
     

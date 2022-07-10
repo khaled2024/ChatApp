@@ -8,15 +8,17 @@
 import Foundation
 import FirebaseStorage
 import AVFoundation
+
 public enum StorageError : Error{
     case failedToUpload
     case failedToGetReference
 }
+
 final class StorageManager{
     static let shared = StorageManager()
     private let storage = Storage.storage().reference()
     
-    // upload picture to fire base storage and return completion with url string to download
+    // upload picture to firebase storage and return completion with url string to download
     public typealias UploadPictureCompletion = (Result<String , Error>)->Void
     public func uploadProfilePicture(with data: Data , fileName: String , completion: @escaping UploadPictureCompletion){
         storage.child("images/\(fileName)").putData(data, metadata: nil) { metaData, error in

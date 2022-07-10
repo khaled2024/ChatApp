@@ -7,7 +7,6 @@
 
 import UIKit
 import Firebase
-import IQKeyboardManagerSwift
 import JGProgressHUD
 class RegisterViewController: UIViewController {
     
@@ -207,6 +206,7 @@ class RegisterViewController: UIViewController {
     }
 }
 //MARK: - extensions
+// UITextFieldDelegate
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == firstNameField {
