@@ -109,6 +109,7 @@ class LoginViewController: UIViewController {
         
     }
     //MARK: - functions
+    // login tapped
     @objc func loginDidTapped(){
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
@@ -128,11 +129,27 @@ class LoginViewController: UIViewController {
                 return
             }
             let user = result.user
+            // to get the first name and last name from db
+            let safeEmail = DataBaseManager.safeEmail(emailAddress: email)
+            DataBaseManager.shared.getDataFor(path: safeEmail) { result in
+                switch result {
+                case .failure(let error):
+                    print("failed to get data \(error)")
+                case .success(let data):
+                    guard let userData = data as? [String:Any], let firstName = userData["firstName"] , let lastName = userData["lastName"] else{
+                        return
+                    }
+                    UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
+                    print("\(firstName) \(lastName)")
+                }
+            }
+            
             UserDefaults.standard.set(email, forKey: "email")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             print("Login \(user)")
         }
     }
+    // error alert pop Up
     private func ErrorLoginAlert(message: String = "Please enter all information in Login fields"){
         let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .destructive, handler: nil))
@@ -186,6 +203,7 @@ extension LoginViewController: LoginButtonDelegate {
             let secondComponent = nameComponents[1]
 
             UserDefaults.standard.set(email, forKey: "email")
+            
             DataBaseManager.shared.userExists(with: email) { exist in
                 if !exist{
                     let chatUser = ChatAppUser(firstName: firstComponent, lastName: secondComponent, email: email)
