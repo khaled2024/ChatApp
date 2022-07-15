@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseDatabase
 import AVFoundation
+import MessageKit
+import UIKit
 
 public enum dataBaseError: Error{
     case failedToFetch
@@ -223,7 +225,7 @@ extension DataBaseManager {
         }
     }
     
-    //Functions
+    // Functions
     private func finishCreatingConversation(name: String , conversationID: String , firstMessage: Message , completion : @escaping (Bool)-> Void){
         //        "message": [
         //        {
@@ -288,7 +290,7 @@ extension DataBaseManager {
             completion(true)
         }
     }
-    /// fetch and return all conversations for the user with passed in email
+    //MARK: -  fetch and return all conversations for the user with passed in email
     public func getAllConversation(for email: String, completion : @escaping (Result<[Conversation] , Error>) -> Void){
         dataBase.child("\(email)/conversations").observe(.value) { snapShot in
             guard let value = snapShot.value as? [[String:Any]] else{
@@ -312,7 +314,7 @@ extension DataBaseManager {
         }
         
     }
-    /// get all messages for a given conversation
+    //MARK: - get all messages for a given conversation
     public func getAllMessagesForConversation(with id: String , completion: @escaping (Result<[Message] , Error>) -> Void){
         dataBase.child("\(id)/messages").observe(.value) { snapShot in
             guard let value = snapShot.value as? [[String:Any]] else{
@@ -329,13 +331,32 @@ extension DataBaseManager {
                       let messageID = dictionary["id"]as? String, let date = ChatViewController.dateFormatter.date(from: dateString)  else{
                     return nil
                 }
+                var kind: MessageKind?
+                if type == "photo" {
+                    guard let imageUrl = URL(string: content) , let placeholder = UIImage(systemName: "plus") else{
+                        return nil
+                    }
+                    let media = Media(url: imageUrl, image: nil, placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
+                    kind = .photo(media)
+                } else if type == "video" {
+                    guard let videoURL = URL(string: content) , let placeholder = UIImage(systemName: "add") else{
+                        return nil
+                    }
+                    let media = Media(url: videoURL, image: nil, placeholderImage: placeholder, size: CGSize(width: 300, height: 300))
+                    kind = .video(media)
+                }else{
+                    kind = .text(content)
+                }
+                guard let finalKind = kind else{
+                    return nil
+                }
                 let sender = Sender(photoURL: "", senderId: senderEmail, displayName: name)
-                return Message(sender: sender, messageId: messageID, sentDate: date, kind: .text(content))
+                return Message(sender: sender, messageId: messageID, sentDate: date, kind: finalKind)
             }
             completion(.success(messages))
         }
     }
-    /// sending a message with target conversation and message
+    //MARK: -  sending a message with target conversation and message
     public func sendMessage(to conversation: String, otherUserEmail:String, name: String , newMessage: Message , completion: @escaping (Bool)-> Void){
         // add new message to messages
         // update sender latest message
@@ -360,9 +381,17 @@ extension DataBaseManager {
                 message = messageText
             case .attributedText(_):
                 break
-            case .photo(_):
+            case .photo(let mediaItem):
+                if let targetUrlString = mediaItem.url?.absoluteString  {
+                    message = targetUrlString
+                    print("mediaType \(message)")
+                }
                 break
-            case .video(_):
+            case .video(let mediaItem):
+                if let targetUrlString = mediaItem.url?.absoluteString  {
+                    message = targetUrlString
+                    print("mediaType \(message)")
+                }
                 break
             case .location(_):
                 break

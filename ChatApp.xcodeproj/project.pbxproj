@@ -22,6 +22,7 @@
 		EA2CDB292849044500F79F3C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2CDB282849044500F79F3C /* ProfileViewController.swift */; };
 		EA30366F28498C0A007EFC76 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA30366E28498C0A007EFC76 /* Extensions.swift */; };
 		EA352BFE287AE845008374E2 /* conversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA352BFD287AE845008374E2 /* conversationTableViewCell.swift */; };
+		EA4387EF2880DE1000F39713 /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4387EE2880DE1000F39713 /* NewConversationCell.swift */; };
 		EA97CFF92870638400242017 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA97CFF82870638400242017 /* ChatViewController.swift */; };
 		EAA6B6C0284B989100977874 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EAA6B6BF284B989100977874 /* GoogleService-Info.plist */; };
 		EAAEB60A284ECEE90049F3AE /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */; };
@@ -48,6 +49,7 @@
 		EA2CDB282849044500F79F3C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EA30366E28498C0A007EFC76 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EA352BFD287AE845008374E2 /* conversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversationTableViewCell.swift; sourceTree = "<group>"; };
+		EA4387EE2880DE1000F39713 /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		EA97CFF82870638400242017 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		EAA6B6BF284B989100977874 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EAAEB609284ECEE90049F3AE /* DataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				EA352BFD287AE845008374E2 /* conversationTableViewCell.swift */,
+				EA4387EE2880DE1000F39713 /* NewConversationCell.swift */,
 				EA2CDB1D284900DE00F79F3C /* Storyboards */,
 				EA2CDB0D2848FDBC00F79F3C /* Assets.xcassets */,
 			);
@@ -300,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA2CDB1F284903F200F79F3C /* LoginViewController.swift in Sources */,
+				EA4387EF2880DE1000F39713 /* NewConversationCell.swift in Sources */,
 				EA2CDB21284903FC00F79F3C /* RegisterViewController.swift in Sources */,
 				EA2CDB272849042E00F79F3C /* NewConversationViewController.swift in Sources */,
 				EA2CDB092848FDB900F79F3C /* ConversationsViewController.swift in Sources */,
@@ -465,6 +469,7 @@
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Messenger;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile pic";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow accessto select a Microphone ";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow accessto select a pic to Your Profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -498,6 +503,7 @@
 				INFOPLIST_FILE = ChatApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Messenger;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take a profile pic";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow accessto select a Microphone ";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow accessto select a pic to Your Profile";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
