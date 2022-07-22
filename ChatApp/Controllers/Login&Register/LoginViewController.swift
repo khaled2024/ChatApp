@@ -70,11 +70,17 @@ class LoginViewController: UIViewController {
         return loginBtn
     }()
     private let faceBookBtn = FBLoginButton()
+    private var loginObserver: NSObjectProtocol?
     //    private let googleSignBtn = GIDSignInButton()
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] notification in
+            guard let strongSelf = self else{
+                return
+            }
+            strongSelf.navigationController?.dismiss(animated: true)
+        })
         title = "Login"
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
@@ -93,7 +99,7 @@ class LoginViewController: UIViewController {
         LoginScrollView.addSubview(passwordField)
         LoginScrollView.addSubview(loginBtn)
         LoginScrollView.addSubview(faceBookBtn)
-        //        LoginScrollView.addSubview(googleSignBtn)
+        //LoginScrollView.addSubview(googleSignBtn)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

@@ -117,14 +117,15 @@ extension NewConversationViewController: UISearchBarDelegate{
             }
         }
     }
+    // filter user in search bar
     func filterUser(with term: String){
-        guard let currentEmail = UserDefaults.standard.value(forKey: "email") as? String, hasFetched else{
+        guard let currentUserEmail = UserDefaults.standard.value(forKey: "email") as? String, hasFetched else{
             return
         }
-        let safeEmail = DataBaseManager.safeEmail(emailAddress: currentEmail)
+        let safeEmail = DataBaseManager.safeEmail(emailAddress: currentUserEmail)
         self.spinner.dismiss()
         let results: [SearchResult] = self.users.filter({
-            guard let email = $0["email"] , email != safeEmail else{
+            guard let email = $0["safeEmail"] , email != safeEmail else{
                 return false
             }
             guard let name = $0["name"]?.lowercased() else{
@@ -132,7 +133,7 @@ extension NewConversationViewController: UISearchBarDelegate{
             }
             return name.hasPrefix(term.lowercased())
         }).compactMap({
-            guard let email = $0["email"] ,
+            guard let email = $0["safeEmail"] ,
                 let name = $0["name"] else{
                 return nil
             }

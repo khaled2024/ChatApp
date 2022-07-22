@@ -39,9 +39,18 @@ class ConversationsViewController: UIViewController {
         lable.isHidden = true
         return lable
     }()
+    private var loginObserver: NSObjectProtocol?
+    
     //MARK: - lifeCycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] notification in
+            guard let strongSelf = self else{
+                return
+            }
+            strongSelf.startListeningConversations()
+        })
+        
         view.addSubview(tableView)
         view.addSubview(noConversationLable)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(barBtnTapped))
@@ -70,6 +79,9 @@ class ConversationsViewController: UIViewController {
     private func startListeningConversations(){
         guard let email = UserDefaults.standard.value(forKey: "email") as? String else{
             return
+        }
+        if let Observer = loginObserver {
+            NotificationCenter.default.removeObserver(Observer)
         }
         let safeEmail = DataBaseManager.safeEmail(emailAddress: email)
         DataBaseManager.shared.getAllConversation(for: safeEmail) { [weak self] result in
@@ -107,7 +119,7 @@ class ConversationsViewController: UIViewController {
     }
     private func createNewConversation(result: SearchResult){
         let name = result.name
-        let email = result.email 
+        let email = result.email
         let vc = ChatViewController(with: email, id: nil)
         vc.isNewConversation = true
         vc.title = name
@@ -139,5 +151,25 @@ extension ConversationsViewController: UITableViewDelegate , UITableViewDataSour
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // begain update
+            let conversationId = conversations[indexPath.row].id
+            tableView.beginUpdates()
+            DataBaseManager.shared.deleteConversation(conversationID: conversationId) {[weak self] success in
+                if success{
+                    self?.conversations.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }else{
+                    print("failed to delete row and conversation")
+                }
+            }
+            
+            tableView.endUpdates()
+        }
     }
 }

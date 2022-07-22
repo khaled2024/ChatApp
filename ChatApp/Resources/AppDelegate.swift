@@ -14,7 +14,9 @@ import FirebaseCore
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        NotificationCenter.default.post(name: .didLogInNotification, object: nil)
         FirebaseApp.configure()
+        
         //        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         //        GIDSignIn.sharedInstance().delegate = self
         ApplicationDelegate.shared.application(

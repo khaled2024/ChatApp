@@ -23,12 +23,11 @@ class RegisterViewController: UIViewController {
         imageView.image = UIImage(systemName: "person.crop.circle")
         imageView.tintColor = .darkGray
         imageView.layer.masksToBounds = true
-        //        imageView.layer.borderWidth = 2
-        //        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        //  imageView.layer.borderWidth = 2
+        //  imageView.layer.borderColor = UIColor.lightGray.cgColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
     private let emailField: UITextField = {
         let emailTF = UITextField()
         emailTF.placeholder = "Email Address"
@@ -103,7 +102,6 @@ class RegisterViewController: UIViewController {
         registerBtn.titleLabel?.textColor = .blue
         return registerBtn
     }()
-    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
