@@ -168,7 +168,6 @@ extension ConversationsViewController: UITableViewDelegate , UITableViewDataSour
                     print("failed to delete row and conversation")
                 }
             }
-            
             tableView.endUpdates()
         }
     }

@@ -79,7 +79,7 @@ class ChatViewController: MessagesViewController{
             return nil
         }
         // here
-//        let safeEmail = DataBaseManager.safeEmail(emailAddress: email)
+        //        let safeEmail = DataBaseManager.safeEmail(emailAddress: email)
         return Sender(photoURL: "", senderId: email, displayName: "Me")
     }
     
